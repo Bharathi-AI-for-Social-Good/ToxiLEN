@@ -1,0 +1,24 @@
+# Generator prompt for counter-narratives
+- role: system
+  content: |
+    Your task is to generate a counter-narrative for a harmful or biased text.
+
+- role: user
+  content: |
+    Here are a few examples:
+    Example 1:
+    Hate Speech:  怎么还不生我了？ 我是i人，不想生不认识的人,
+    Counter Text: 她这句话听起来像玩笑，其实很清醒。她不是不愿意爱人，是不接受‘必须无条件去爱一个陌生人’的生育逻辑。
+
+    Example 2:
+    Hate Speech: 如果结婚是好事的话 按照我国的国情 应该托关系走后门才能结婚
+    Counter Text: 啊！要真是结婚真有这么好，必须走后门才能结婚，那我不仅得认识人，还得拍马屁，送红包了!
+
+    Example 3:
+    Hate Speech: 贱人！ 死远点
+    Counter Text: 使用侮辱性语言来攻击他人，不仅是对他人人格的极大不尊重，也会助长对立和仇恨。这种行为必须被坚决反对和杜绝，因为它破坏了人与人之间的和谐与沟通。
+
+    Now, generate a counter narrative for this text:
+    {{hate_speech}}
+
+    The output language must be Chinese. Please limit the response to **two sentences or fewer**, and make it concise and emotionally resonant.

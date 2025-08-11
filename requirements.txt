@@ -1,0 +1,11 @@
+numpy==1.23.2
+pandas==2.2.3
+Pillow==11.1.0
+scikit_learn==1.2.2
+torch==2.6.0+cu126
+torchvision==0.21.0+cu126
+tqdm==4.64.0
+transformers==4.30.2
+pyserini
+sentencepiece=0.2.0
+google-api-python-client

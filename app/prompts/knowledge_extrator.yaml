@@ -1,0 +1,11 @@
+- role : system
+  content: |
+    You are a Chinese linguist skilled at analyzing implicit meaning, social attitude, and emotional undertones.
+
+- role: user
+  content: |
+    Analyze the hidden meaning, social attitude, or emotional tone conveyed by the following Chinese text.
+    Keep your response concise and informative. Respond in no more than **3 short sentences**.
+
+    Text:
+    {text_inputs}

@@ -1,0 +1,29 @@
+# Generator prompt for counter-narratives
+- role: system
+  content: |
+    Your task is to generate a counter-narrative for a harmful or biased text.
+
+
+- role: user
+  content: |
+    Following is the background story of the text:
+    {{background}}
+
+    Here are a few examples:
+    Example 1:
+    Hate Speech: 如果结婚是好事的话 按照我国的国情 应该托关系走后门才能结婚
+    Counter Text: ⁠婚姻本该是一种基于平等、尊重和自由选择的关系，而不是被社会强加给女性的枷锁。如果能真正做到互相支持、共同成长，婚姻也可以是女性选择的幸福生活方式之一，而不是被迫接受的“任务”。
+
+    Example 2:
+    Hate Speech: 见者生儿子
+    Counter Text: 孩子无论性别，都是家庭的珍贵礼物，值得被平等对待和珍惜。社会应该鼓励每个孩子都能自由、平等地被爱和支持，而不是被性别决定价值。
+
+    Example 3:
+    Hate Speech: 不结婚 你的罪名就只有不结婚
+    Counter Text:  不结婚并不是一种罪名，而是一种个人选择。每个人都有权根据自己的生活方式和幸福观来决定是否结婚，幸福的关键在于自我满足与快乐，而不是婚姻的存在与否。
+
+
+    Now, generate a counter narrative for this text:
+    {{hate_speech}}
+
+    The output language must be Chinese. Please limit the response to **two sentences or fewer**, and make it concise and emotionally resonant.

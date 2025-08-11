@@ -1,0 +1,11 @@
+# Generator prompt for counter-narratives
+- role: system
+  content: |
+    Your task is to generate a counter-narratives for a harmful or biased text.
+
+- role: user
+  content: |
+    Now, generate a counter narrative for this text:
+    {{hate_speech}}
+
+    The output language must be Chinese. Please limit the response to **two sentences or fewer**, and make it concise and emotionally resonant.
