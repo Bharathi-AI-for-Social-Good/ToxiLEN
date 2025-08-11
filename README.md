@@ -103,13 +103,3 @@ If you use this model in your work, please cite:
 * CLIP model: OpenAI
 * Transformers library: Hugging Face
 * Dataset contributor: Ping Du
-
-## TODO
-
-* [ ] Add attention heatmap visualization
-* [ ] Expand to multi-label classification (e.g., sexist, insulting, belittling)
-* [ ] Add multilingual support (EN / CN / DE / NL)
-
-## License
-
-This project is licensed under the MIT License. See [LICENSE](LICENSE) for more details.
