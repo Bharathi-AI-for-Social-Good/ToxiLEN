@@ -40,18 +40,11 @@ The framework consists of two key components:
 
 ---
 
-## Dataset Access
+📄 **Apply for Access**  
+Please fill out this form to download the dataset or model:
 
-Since the dataset involves **sensitive content related to misogyny**, access is restricted.
-Please complete the following form to request access:
-📌 [Google Form: Dataset Request](xxxx)
+👉 [ToxiLEN Access Form](https://docs.google.com/forms/d/e/1FAIpQLScdL8RjdanUpS4xzX2wH3VwI4KDjb6Ulz9vPHVQTDutRxQ1PQ/viewform)
 
----
-## Model Checkpoints Access
-
-The pretrained **ToxiLEN model parameters (checkpoints)** are also restricted to prevent misuse.  
-To download the model weights, please complete the following form:  
-📌 [Google Form: Model Checkpoints Request](xxxx)  
 
 After approval, place the downloaded checkpoint file(s) directly in the **project root directory** (same level as `main.py`).  
 The framework will automatically load them during training or inference.  
