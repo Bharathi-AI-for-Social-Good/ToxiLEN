@@ -18,20 +18,23 @@ common_config = {
 }
 
 config = {
+    'predict':{
+        **common_config
+    },
     'train': {
         **common_config,
-        'image_dir': 'data/cindy/images/train',
-        'data': 'data/cindy/data/train.csv',
+        'image_dir': 'data/cmmd/images/train',
+        'data': 'data/cmmd/data/train.csv',
     },
-    # 'dev': {
-    #     **common_config,
-    #     'image_dir': 'data/cindy/images/dev',
-    #     'text_csv': 'data/cindy/all/dev.csv',
-    # },
+    'dev': {
+        **common_config,
+        'image_dir': 'data/cmmd/images/dev',
+        'text_csv': 'data/cmmd/all/dev.csv',
+    },
     'test': {
         **common_config,
-        'image_dir': 'data/cindy/images/test',
-        'data': 'data/cindy/data/test.csv',
+        'image_dir': 'data/cmmd/images/test',
+        'data': 'data/cmmd/data/test.csv',
     },
     'toximm_train':{
         **common_config,

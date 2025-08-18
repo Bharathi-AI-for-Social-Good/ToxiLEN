@@ -1,9 +1,13 @@
+import os
 import openai
 import time
 from groq import Groq
+from dotenv import load_dotenv
 
-client = openai.OpenAI(api_key="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")  # ← 替换为你自己的 key
-groq_client = Groq(api_key="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") 
+load_dotenv()
+
+client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))  # ← 替换为你自己的 key
+groq_client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
 
 def call_gpt_api(messages, max_tokens=512, model="gpt-4o", temperature=0.8, max_retries=5):

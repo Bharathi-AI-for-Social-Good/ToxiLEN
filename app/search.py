@@ -45,21 +45,21 @@ class InContextSearcher:
 
     @staticmethod
     def der_rerank(corpus_vecs, query_vec, k, w):
-        sim_q = cosine_similarity(query_vec, corpus_vecs)[0]         # relevance 得分 (1, N)
-        sim_dd = cosine_similarity(corpus_vecs, corpus_vecs)         # 所有候选之间的相似度 (N, N)
-        
-        selected = [int(np.argmax(sim_q))]  # 首先选出与 query 最相似的样本
+        sim_q = cosine_similarity(query_vec, corpus_vecs)[0]         # relevance score (1, N)
+        sim_dd = cosine_similarity(corpus_vecs, corpus_vecs)         # all candidates similarity (N, N)
+
+        selected = [int(np.argmax(sim_q))]  # first select the sample most similar to query
         candidates = set(range(len(corpus_vecs))) - set(selected)
 
         while len(selected) < k and candidates:
             prev_idx = selected[-1]
             candidate_list = list(candidates)
 
-            # 与上一个已选项的 cosine 距离（注意是 1 - 相似度）
+            # Compute diversity and relevance scores
             diversity_scores = 1 - sim_dd[candidate_list, prev_idx]
             relevance_scores = sim_q[candidate_list]
 
-            # 最终加权得分
+            # Final weighting score
             final_scores = w * diversity_scores + (1 - w) * relevance_scores
             next_idx = candidate_list[int(np.argmax(final_scores))]
 

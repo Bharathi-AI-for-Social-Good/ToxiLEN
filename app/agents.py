@@ -1,16 +1,108 @@
 import json
+import torch
 import re
+from PIL import Image
+from transformers import BlipProcessor, BlipForConditionalGeneration
 
+device = "cuda" if torch.cuda.is_available() else "cpu"
 
+from models.main_model import MemeMultimodalDetector
 from app.repo.prompt_loader import load_prompt_by_name
 from app.api import call_gpt_api, call_groq_api
 from app.utils.logger import get_logger
 from app.utils.regex import extract_fields
 from app.search import InContextSearcher
+from app.trainer.model_factory import build_model
+from app.trainer.predict import single_predict
 
 logger = get_logger(__name__)
 
 searcher = InContextSearcher()
+
+model = build_model("default")
+model.load_state_dict(torch.load("toxilen.pth", map_location=device))
+
+processor =  BlipProcessor.from_pretrained("Salesforce/blip-image-captioning-base")
+image_model = BlipForConditionalGeneration.from_pretrained("Salesforce/blip-image-captioning-base").to(device)
+
+def clean_json_response(response: str) -> str:
+    """
+    清理 GPT 输出中的 Markdown 代码块包裹
+    """
+    match = re.search(r"```(?:json)?\s*(\{.*?\})\s*```", response, re.DOTALL)
+    if match:
+        return match.group(1)
+    return response.strip()
+
+
+
+def agent_knowledge_extraction(context):
+    logger.info("Extracting knowledge from context")
+    prompt = load_prompt_by_name("knowledge_extractor", variables=context)
+    response = call_gpt_api(prompt, max_tokens=512)
+
+    return {"explanation": response}
+
+
+def agent_span_extraction(context):
+    logger.info("Extracting spans from context")
+    prompt = load_prompt_by_name("span_extractor", variables=context)
+    response = call_gpt_api(prompt, max_tokens=512)
+
+    if isinstance(response, str):
+        try:
+            response = clean_json_response(response)
+            response = json.loads(response)
+        except json.JSONDecodeError as e:
+            raise ValueError(f"Illegal JSON: {response}") from e
+
+    data = response.get("item", response)
+
+    hateful_span = data.get('misogynistic', [])
+    general_emo = data.get('general_emotion', [])
+
+    spans = ""
+    if hateful_span:
+        spans += f"<HATE_SPAN> {' | '.join(hateful_span)} </HATE_SPAN>"
+    if general_emo:
+        spans += f"<EMO_SPAN> {' | '.join(general_emo)} </EMO_SPAN>"
+    if not hateful_span and not general_emo:
+        spans += "<NO_SPAN>"
+
+    spans += context['text_inputs']
+
+    return { "prompt": spans }
+
+
+def agent_caption_generation(context):
+    logger.info("Generating caption for image")
+    image_path = context.get("image_path")
+    if not image_path:
+        raise ValueError("Image path is required")
+
+    try:
+        raw_image = Image.open(image_path).convert('RGB')
+        inputs = processor(raw_image,return_tensors='pt').to(device)
+        out = image_model.generate(**inputs)
+        caption = processor.decode(out[0], skip_special_tokens=True)
+    except Exception as e:
+        logger.error(f"生成字幕时出错 {image_path}: {e}")
+        context["caption"] = "Error generating caption"
+        return context
+
+    return {"caption": caption}
+
+
+def agent_prediction(context):
+    logger.info("Running prediction on Memes")
+    image = Image.open(context["image_path"]).convert("RGB")
+
+    context['image'] = image
+    pred, log_probs = single_predict(model,context,device=device)
+
+    context["prediction"] = pred
+    context["log_probs"] = log_probs
+    return context
 
 def agent_sample(context):
     query = context.get("query", "Sample query")
@@ -33,15 +125,6 @@ def agent_sample(context):
     return prompts
 
 
-
-def clean_json_response(response: str) -> str:
-    """
-    清理 GPT 输出中的 Markdown 代码块包裹
-    """
-    match = re.search(r"```(?:json)?\s*(\{.*?\})\s*```", response, re.DOTALL)
-    if match:
-        return match.group(1)
-    return response.strip()
 
 
 def agent_generator(context: dict, max_tokens=512):

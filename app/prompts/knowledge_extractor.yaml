@@ -6,6 +6,7 @@
   content: |
     Analyze the hidden meaning, social attitude, or emotional tone conveyed by the following Chinese text.
     Keep your response concise and informative. Respond in no more than **3 short sentences**.
+    the outputs should be restricted to Chinese.
 
     Text:
-    {text_inputs}
+    {{text_inputs}}
