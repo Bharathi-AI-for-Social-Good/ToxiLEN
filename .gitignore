@@ -195,17 +195,8 @@ cython_debug/
 
 
 # Data
-/data/cindy/images/
-/data/toxi_mm/images/
-/data/translation_sample/memes/
 *.pth
 *.pt
-*.jpg
-*.png
-*.jpeg
-*.gif
-*.bmp
-*.tiff
-*.webp
+
 
 .vscode/

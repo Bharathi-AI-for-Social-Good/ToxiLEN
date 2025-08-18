@@ -1,7 +1,9 @@
 # ToxiLens: Multimodal Model for Misogyny Meme Detection and Counter-Narrative Generation
 
 ## Overview
-![Interface](assets/showcase.png)
+▶️ Watch the demo video:  
+[![Watch the video](https://img.youtube.com/vi/HvTRPd44OVo/0.jpg)](https://www.youtube.com/watch?v=HvTRPd44OVo)
+
 
 **ToxiLEN** is a unified multimodal framework designed for detecting and generating counter-narratives (CNs) against **Chinese misogynistic memes**, which often contain implicit bias and culturally specific expressions.
 ![Overview of ToxiLEN](assets/framwork.png)
@@ -184,7 +186,7 @@ To train the model from scratch:
 python train.py
 ```
 
-### Prediction / Inference
+### Inference
 
 To run the full pipeline with Gradio UI:
 
