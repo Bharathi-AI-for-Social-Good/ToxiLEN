@@ -3,8 +3,8 @@ import torch.nn as nn
 
 class BiGateFusion(nn.Module):
     """
-    输入:  feat_a, feat_b  (B, D)  —— 两路同维度特征
-    输出: fused           (B, 2D) —— 拼接双门控结果
+    输入:  feat_a, feat_b  (B, D)  —— two-stream features
+    输出: fused           (B, 2D) —— concatenated gated result
     """
     def __init__(self, hidden_dim: int = 2048):
         super().__init__()

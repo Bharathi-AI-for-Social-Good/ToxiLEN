@@ -1,5 +1,3 @@
-#TODO inputs outputs
-
 from torch import nn
 from transformers import AutoModel, AutoTokenizer
 import re, torch
@@ -56,6 +54,6 @@ class TokenModel(nn.Module):
         output = self.model(**encoding).last_hidden_state  # (B, L, 768)
 
         if return_tokens:
-            return output  # 所有 token 的表示
+            return output  # All token embeddings
         else:
             return output[:, 0]
