@@ -237,7 +237,6 @@ If you use **ToxiLEN**, please cite the following:
 @inproceedings{zhuang2025toxilen,
   title={ToxiLEN: A Knowledge-Augmented System for Chinese Misogynistic Meme Detection and Counter-Narrative Generation},
   author={Zhuang, Xiaojian and Thenmozhi, Durairaj and Rajalakshmi, Ratnavel and Chakravarthi, Bharathi Raja},
-  booktitle={Proceedings of Information Fusion},
   year={2025}
 }
 ```
